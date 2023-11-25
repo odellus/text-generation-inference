@@ -122,7 +122,7 @@ def download_weights(
     is_local_model = (Path(model_id).exists() and Path(model_id).is_dir()) or os.getenv(
         "WEIGHTS_CACHE_OVERRIDE", None
     ) is not None
-
+    logger.info(f'Value of is_local_model: {is_local_model}')
     if not is_local_model:
         try:
             adapter_config_filename = hf_hub_download(
@@ -150,16 +150,16 @@ def download_weights(
             if not extension == ".safetensors" or not auto_convert:
                 raise e
 
-    else:
-        # Try to load as a local PEFT model
-        try:
-            utils.download_and_unload_peft(
-                model_id, revision, trust_remote_code=trust_remote_code
-            )
-            utils.weight_files(model_id, revision, extension)
-            return
-        except (utils.LocalEntryNotFoundError, utils.EntryNotFoundError):
-            pass
+    # else:
+    #     # Try to load as a local PEFT model
+    #     try:
+    #         utils.download_and_unload_peft(
+    #             model_id, revision, trust_remote_code=trust_remote_code
+    #         )
+    #         utils.weight_files(model_id, revision, extension)
+    #         return
+    #     except (utils.LocalEntryNotFoundError, utils.EntryNotFoundError):
+    #         pass
 
     # Try to see if there are local pytorch weights
     try:
