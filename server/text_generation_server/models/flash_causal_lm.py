@@ -697,7 +697,7 @@ class FlashCausalLM(Model):
             + cache_manager.num_blocks
         )
 
-        del batch
+        # del batch
         del cache_manager
 
         set_cache_manager(

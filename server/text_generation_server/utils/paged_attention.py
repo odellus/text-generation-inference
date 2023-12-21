@@ -10,7 +10,7 @@ _PARTITION_SIZE = 512
 def reshape_and_cache(key: torch.Tensor, value: torch.Tensor, key_cache: torch.Tensor, value_cache: torch.Tensor,
                       slots: torch.Tensor):
     cache_ops.reshape_and_cache(
-        key, value, key_cache, value_cache, slots
+        key, value, key_cache, value_cache, slots.type(torch.LongTensor)
     )
 
 
